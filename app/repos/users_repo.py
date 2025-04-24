@@ -12,4 +12,13 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(db_user)
         return db_user
+#authenticate user based on email and password
+    def authenticate_user(self, email: str, password: str) -> Users:
+        user = self.db.query(Users).filter(Users.email == email).first()
+        if not user:
+            return None
+        if user.password == password:
+            return user
+        return None
 
+    

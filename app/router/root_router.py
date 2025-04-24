@@ -1,4 +1,6 @@
 from fastapi import APIRouter
+
+from router.auth_router import router as auth_router
 from router.employee_router import router as employee_router
 from router.departments_router import router as departments_router
 from router.attendance_router import router as attendance_router
@@ -13,5 +15,6 @@ def rootRouter():
     api_router.include_router(attendance_router)
     api_router.include_router(projects_router)
     api_router.include_router(role_router)
+    api_router.include_router(auth_router)
     return api_router
 

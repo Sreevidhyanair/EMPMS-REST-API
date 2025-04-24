@@ -1,8 +1,9 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from core.jwt.jwt_utils import create_access_token
 from database.session import SessionLocal
-from schemas.employee_schema import EmployeeCreate, EmployeeResponse,EmployeeIDResponse
+from schemas.employee_schema import EmployeeCreate, EmployeeResponse,EmployeeIDResponse, EmployeeTokenResponse
 from services.employee_service import EmployeeService
 from database.deps import get_db
 
@@ -28,11 +29,19 @@ router = APIRouter(prefix="/employee", tags=["Employee"])
 
 
 
-@router.post("/create", response_model=EmployeeResponse)
+@router.post("/create", response_model=EmployeeTokenResponse)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     
     service = EmployeeService(db)
-    return service.create_employee(employee)
+    emp=service.create_employee(employee)
+    
+    access_token=create_access_token(data={"sub": emp.email, "employee_id": emp.id})
+    res={"email":emp.email,
+         "employee_id":emp.id,
+         "access_token":access_token,
+         "token_type":"bearer"
+        }
+    return res
 
 
 # end point : /api/employee/
@@ -49,7 +58,7 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
 #    },
 
 
-@router.get("/", response_model=List[EmployeeResponse])
+@router.get("/all", response_model=List[EmployeeResponse])
 def get_all_employee(db: Session = Depends(get_db)):
     service= EmployeeService(db)
     employees= service.get_all_employees()

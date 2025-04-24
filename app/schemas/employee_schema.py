@@ -27,12 +27,14 @@ class EmployeeBase(BaseModel):
    
 class EmployeeCreate(EmployeeBase):
     password: str
+    
     @field_validator('password')
     def validate_password(cls, value):
         #password between 6 and 8 characters
-        if len(value) < 6 or len(value) > 8:         
+        if len(value) <=6 or len(value) >= 8:         
             raise ValueError('Password must be 6 to 8 characters long')
         return value
+
 
 
 class EmployeeIDResponse(EmployeeBase):
@@ -45,4 +47,8 @@ class EmployeeResponse(EmployeeBase):
     class Config:
         orm_mode = True
         # Enable ORM mode to work with SQLAlchemy models
+
+class EmployeeTokenResponse(EmployeeResponse):
+    access_token: str
+    token_type:str
 

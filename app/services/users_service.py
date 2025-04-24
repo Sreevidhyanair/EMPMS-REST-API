@@ -10,3 +10,9 @@ class UserService:
 
     def create_user(self, email: str, password: str) -> Users:
         return self.user_repo.create_user(email=email, password=password)
+    
+    def authenticate_user(self, email: str, password: str) -> Users:
+        user= self.user_repo.authenticate_user(email=email, password=password)
+        if not user:
+            return None
+        return user
