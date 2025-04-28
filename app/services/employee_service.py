@@ -4,6 +4,7 @@
 
 
 from fastapi import HTTPException
+from services.role_service import RoleService
 from services.users_service import UserService
 from repos.employee_repo import EmployeeRepository
 from sqlalchemy.orm import Session
@@ -23,20 +24,35 @@ class EmployeeService:
             raise HTTPException(status_code=404, detail="Employee not found")
         return employee
 
-    def create_employee(self, employee: EmployeeCreate):
+    def create_employee(self, employee: EmployeeCreate,):
 
         emp= self.employee_repo.create_employee(employee)
+           
         if not emp:
             raise HTTPException(status_code=400, detail="Employee creation failed")
         else:
             user_service= UserService(self.db)
-            user=user_service.create_user(email=employee.email, password=employee.password)
+            user=user_service.create_user(email=employee.email, password=employee.password,role_id=employee.role_id)
             if not user:
                 #Rollback the employee creation if user creation fails
                 self.db.rollback()
                 raise HTTPException(status_code=400, detail="User creation failed")
             else:
-                return emp
+                role_service=RoleService(self.db)
+                role=role_service.get_role_by_id(employee.role_id)
+                #get role details from role
+                #role= get_role_by_id(employee.role_id)
+
+                return {"emp": {
+                    "id": emp.id,
+                    "first_name": emp.first_name,
+                    "last_name": emp.last_name,
+                    "email": emp.email,
+                    "phone": emp.phone
+                },
+                "user": user,
+                "role": role, "user":user,"role":role}
+                
     
     def update_employee(self, employee_id: int, employee_data: EmployeeCreate):
         updated_employee = self.employee_repo.update_employee(employee_id, employee_data)

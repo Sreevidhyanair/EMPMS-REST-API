@@ -29,19 +29,14 @@ router = APIRouter(prefix="/employee", tags=["Employee"])
 
 
 
-@router.post("/create", response_model=EmployeeTokenResponse)
+@router.post("/create")
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     
     service = EmployeeService(db)
-    emp=service.create_employee(employee)
+    data=service.create_employee(employee)
+    return data
     
-    access_token=create_access_token(data={"sub": emp.email, "employee_id": emp.id})
-    res={"email":emp.email,
-         "employee_id":emp.id,
-         "access_token":access_token,
-         "token_type":"bearer"
-        }
-    return res
+        
 
 
 # end point : /api/employee/

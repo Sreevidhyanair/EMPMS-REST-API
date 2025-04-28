@@ -5,7 +5,7 @@ from jose import jwt, JWTError
 #constants
 SECRET_KEY="your_secret_key"  # Replace with your actual secret key
 ALGORITHM="HS256"  # Algorithm used for encoding the JWT
-ACCESS_TOKEN_EXPIRE_MINUTES=5  # Token expiration time in minutes
+ACCESS_TOKEN_EXPIRE_MINUTES=300  # Token expiration time in minutes
    
 
 def create_access_token(data: dict, expires_delta: int = None):
@@ -14,7 +14,7 @@ def create_access_token(data: dict, expires_delta: int = None):
         print(f"expires_delta: {expires_delta}")
         expire = datetime.now(timezone.utc) + timedelta(minutes=expires_delta)
     else:
-        ACCESS_TOKEN_EXPIRE_MINUTES = 1  # Default expiration time
+        ACCESS_TOKEN_EXPIRE_MINUTES = 300  # Default expiration time
         print(f"ACCESS_TOKEN_EXPIRE_MINUTES: {ACCESS_TOKEN_EXPIRE_MINUTES}")
         expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     

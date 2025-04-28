@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr,field_validator
+from schemas.role_schema import RolesResponse
 
 class EmployeeBase(BaseModel):
     first_name: str
@@ -27,6 +28,7 @@ class EmployeeBase(BaseModel):
    
 class EmployeeCreate(EmployeeBase):
     password: str
+    role_id: int
     
     @field_validator('password')
     def validate_password(cls, value):
@@ -39,6 +41,8 @@ class EmployeeCreate(EmployeeBase):
 
 class EmployeeIDResponse(EmployeeBase):
     employee_id: int
+
+
 
     
 class EmployeeResponse(EmployeeBase):

@@ -12,4 +12,6 @@ class Project(Base):
     description = Column(Text)
     start_date = Column(DateTime, default=datetime.now())
     end_date = Column(DateTime, nullable=True)
+    departments= relationship("Department", back_populates="projects")
+    department_id = Column(Integer, ForeignKey("departments.id",ondelete="CASCADE"), nullable=False)
     

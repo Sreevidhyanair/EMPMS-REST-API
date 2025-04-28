@@ -1,18 +1,19 @@
 from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional, List,Dict
 
-class RolesBase(BaseModel):
+class RoleBase(BaseModel):
     role_name: str
-    description: str
-    permissions: dict  # Assuming permissions is a dictionary or similar structure
+    description: Optional[str] = None
+    permissions: Dict[str, bool] 
 
-    class Config:
-        orm_mode = True  # Enable ORM mode to work with SQLAlchemy models
-
-class RolesCreate(RolesBase):
+class RolesCreate(RoleBase):
     pass
-
-class RolesResponse(RolesBase):
+class RolesResponse(RoleBase):
     id: int
+    created_at: datetime
+    updated_at: datetime
+    #add 
 
     class Config:
-        orm_mode = True  # Enable ORM mode to work with SQLAlchemy models
+        orm_mode = True

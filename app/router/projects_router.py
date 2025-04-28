@@ -30,7 +30,7 @@ router = APIRouter(prefix="/project", tags=["Projects"])
 # }
 
 
-@router.post("/create", response_model=ProjectsResponse)
+@router.post("/create")
 def create_project(projects: ProjectsCreate, db: Session = Depends(get_db)):
     """
     Create a new projects.
@@ -53,4 +53,9 @@ def get_project_by_id(project_id: int, db: Session = Depends(get_db)):
 def update_project(project_id: int, project_data: ProjectsCreate, db: Session = Depends(get_db)):
     service = ProjectService(db)
     return service.update_project(project_id, project_data)
+
+@router.get("/dept/{dept_id}", response_model=list[ProjectsResponse])
+def get_projects_by_deptid(dept_id: int, db: Session = Depends(get_db)):
+    service = ProjectService(db)
+    return service.get_by_deptid(dept_id)
 

@@ -6,12 +6,17 @@ class ProjectsBase(BaseModel):
     start_date: datetime
     end_date: datetime
     description: Text
+    #department_id: int
 
     class Config:
         orm_mode = True  # Enable ORM mode to work with SQLAlchemy models
 
 class ProjectsCreate(ProjectsBase):
-    pass
+    department_id: int
+
+    class Config:
+        orm_mode = True  # Enable ORM mode to work with SQLAlchemy models
+
 
 
 class ProjectsResponse(ProjectsBase):

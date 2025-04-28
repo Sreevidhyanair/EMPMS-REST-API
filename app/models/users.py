@@ -6,6 +6,8 @@ class Users(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(50), nullable=False, unique=True)
-    password = Column(String(100), nullable=False)
-   
+    email = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    role_id= Column(Integer, ForeignKey("role.id",ondelete="CASCADE"), nullable=False)
+
+    roles=relationship("Role", back_populates="users")

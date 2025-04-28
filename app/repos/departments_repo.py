@@ -39,5 +39,5 @@ class DepartmentRepository:
             self.db.delete(dept)
             self.db.commit()
         return dept
-    
+
     

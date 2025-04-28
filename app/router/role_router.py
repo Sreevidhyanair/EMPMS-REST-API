@@ -25,8 +25,26 @@ router = APIRouter(prefix="/role", tags=["Role"])
 #
 @router.post("/create", response_model=RolesResponse)
 def create_role(role: RolesCreate, db: Session = Depends(get_db)):
-    """
-    Create a new role.
-    """
-    service = RoleService(db)
-    return service.create_role(role)
+    role_service = RoleService(db)
+    return role_service.create_role(role)
+
+@router.get("/all", response_model=list[RolesResponse])
+def get_all_roles(db: Session = Depends(get_db)):
+    role_service = RoleService(db)
+    return role_service.get_all_roles()
+
+@router.get("/{role_id}", response_model=RolesResponse)
+def get_role_by_id(role_id: int, db: Session = Depends(get_db)):
+    role_service = RoleService(db)
+    return role_service.get_role_by_id(role_id)
+    
+@router.put("/{role_id}", response_model=RolesResponse)
+def update_role_permissions(role_id: int, role: RolesCreate, db: Session = Depends(get_db)):
+    role_service = RoleService(db)
+    return role_service.update_role_permissions(role_id, role)
+
+@router.delete("/{role_id}")
+def delete_role(role_id: int, db: Session = Depends(get_db)):
+    role_service = RoleService(db)
+    return role_service.delete_role(role_id)
+

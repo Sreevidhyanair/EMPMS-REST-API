@@ -13,6 +13,7 @@ class ProjectRepository:
             description=project.description,
             start_date=project.start_date,
             end_date=project.end_date,
+            department_id=project.department_id
         )
         self.db.add(db_project)
         self.db.commit()
@@ -35,3 +36,5 @@ class ProjectRepository:
             self.db.commit()
             self.db.refresh(db_project)
         return db_project
+    def get_by_deptid(self, dept_id: int) -> list[Project]:
+        return self.db.query(Project).filter(Project.department_id == dept_id).all()

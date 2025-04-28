@@ -13,4 +13,4 @@ class Department(Base):
     description = Column(String(255),index=True, nullable=True)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
-    onupdate = datetime.now()
+    projects = relationship("Project", back_populates="departments")
