@@ -10,7 +10,8 @@ class AttendanceBase(BaseModel):
 
 
 class AttendanceCreate(AttendanceBase):
-    pass
+    employee_id: int
+    
 
 
 class AttendanceResponse(AttendanceBase):

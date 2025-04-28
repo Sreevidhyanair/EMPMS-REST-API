@@ -1,4 +1,5 @@
 from fastapi import HTTPException,status
+from services.employee_service import EmployeeService
 from repos.attendance_repo import AttendanceRepository
 from sqlalchemy.orm import Session
 from schemas.attendance_schema import AttendanceCreate
@@ -9,7 +10,18 @@ class AttendanceService:
         self.attendance_repo = AttendanceRepository(db)
 
     def create_attendance(self, attendance: AttendanceCreate):
-        return self.attendance_repo.create_attendance(attendance)
+        att= self.attendance_repo.create_attendance(attendance)
+        emp_service=EmployeeService(self.db)
+        emp=emp_service.get_employee_by_id(attendance.employee_id)
+        return{
+            "attendance": {
+                "id": att.id,
+                "date": att.date,
+                "status": att.status,
+                "employee_id": att.employee_id
+            },"emp":emp
+        }
+   
     
     def get_all_attendance(self):
         att=self.attendance_repo.get_all_attendance()

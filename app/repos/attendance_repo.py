@@ -8,7 +8,7 @@ class AttendanceRepository:
         self.db = db
 
     def create_attendance(self, attendance: AttendanceCreate) -> Attendance:
-        db_attendance = Attendance(date=attendance.date,status=attendance.status)
+        db_attendance = Attendance(date=attendance.date,status=attendance.status,employee_id=attendance.employee_id)
         self.db.add(db_attendance)
         self.db.commit()
         self.db.refresh(db_attendance)

@@ -1,5 +1,4 @@
 from fastapi import HTTPException, status
-
 from schemas.departments_schema import DepartmentCreate, DepartmentUpdate
 from repos.departments_repo import DepartmentRepository
 from sqlalchemy.orm import Session
@@ -37,3 +36,5 @@ class DepartmentService:
         if not deleted:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Department not found")
         return deleted
+    
+    

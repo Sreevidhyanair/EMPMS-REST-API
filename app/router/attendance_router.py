@@ -25,7 +25,7 @@ router = APIRouter(prefix="/attendance", tags=["Attendance"])
 #     "status": "present"
 # }
 #
-@router.post("/create", response_model=AttendanceResponse)
+@router.post("/create")
 def create_attendance(attendance: AttendanceCreate, db: Session = Depends(get_db)):
     """
     Create a new attendance record.

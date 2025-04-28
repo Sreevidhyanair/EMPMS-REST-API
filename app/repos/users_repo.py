@@ -7,8 +7,8 @@ class UserRepository:
         
 
     #create user in the database with email,password and role id from employee table
-    def create_user(self, email: str, password: str, role_id: int) -> Users:
-        user = Users(email=email, password=password, role_id=role_id)
+    def create_user(self, email: str, password: str, role_id: int,employee_id:int) -> Users:
+        user = Users(email=email, password=password, role_id=role_id,employee_id=employee_id)
         self.db.add(user)
         self.db.commit()
         self.db.refresh(user)

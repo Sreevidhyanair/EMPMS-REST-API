@@ -29,6 +29,8 @@ class EmployeeBase(BaseModel):
 class EmployeeCreate(EmployeeBase):
     password: str
     role_id: int
+    department_id: int
+    
     
     @field_validator('password')
     def validate_password(cls, value):

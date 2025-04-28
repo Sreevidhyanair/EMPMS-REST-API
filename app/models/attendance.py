@@ -10,4 +10,7 @@ class Attendance(Base):
     id = Column(Integer, primary_key=True, index=True)
     date = Column(DateTime, nullable=False)  # Date of attendance
     status = Column(String(20), nullable=False)  # e.g., Present, Absent, Leave
+    employee_id = Column(Integer, ForeignKey("employees.id", ondelete="SET NULL"), nullable=False)
+
+    employees = relationship("Employee", back_populates="atendances")
     

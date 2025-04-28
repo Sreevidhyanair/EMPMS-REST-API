@@ -20,6 +20,7 @@ class EmployeeRepository:
             last_name=employee.last_name,
             email=employee.email,
             phone=employee.phone,
+            department_id=employee.department_id
         )
         self.db.add(db_employee)
         self.db.commit()

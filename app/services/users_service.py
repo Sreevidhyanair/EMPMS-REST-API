@@ -8,8 +8,8 @@ class UserService:
         self.db = db
         self.user_repo = UserRepository(db)
 
-    def create_user(self, email: str, password: str,role_id: int) -> Users:
-        return self.user_repo.create_user(email=email, password=password,role_id=role_id)
+    def create_user(self, email: str, password: str,role_id: int,employee_id:int) -> Users:
+        return self.user_repo.create_user(email=email, password=password,role_id=role_id,employee_id=employee_id)
     
     def authenticate_user(self, email: str, password: str) -> Users:
         user= self.user_repo.authenticate_user(email=email, password=password)

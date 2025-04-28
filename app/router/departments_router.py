@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from services.projects_service import ProjectService
 from database.deps import get_db
 from repos.departments_repo import DepartmentRepository
 from schemas.departments_schema import DepartmentCreate, DepartmentResponse
@@ -27,3 +28,7 @@ def get_department_by_id(dept_id: int, db: Session = Depends(get_db)):
 def update_department(dept_id: int, dept_data: DepartmentCreate, db: Session = Depends(get_db)):
     department_service = DepartmentService(db)
     return department_service.update(dept_id, dept_data)
+@router.get("/projects/{dept_id}")
+def get_projects_by_deptid(dept_id: int, db: Session = Depends(get_db)):
+    service = ProjectService(db)
+    return service.get_by_deptid(dept_id)

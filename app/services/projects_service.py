@@ -24,7 +24,8 @@ class ProjectService:
             "description": pro.description,
             "start_date": pro.start_date,
             "end_date": pro.end_date
-            },"department": dept}
+            },
+"department": dept}
 
     
     
